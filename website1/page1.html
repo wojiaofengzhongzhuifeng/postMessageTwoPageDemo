@@ -12,14 +12,24 @@ this is page 1
 <button id="btn">go to page2</button>
 
 <script>
+
+
+
+
   btn.addEventListener("click", ()=>{
+
+    // 在 page1 得到 page2 的引用
     const popup = window.open("http://127.0.0.1:8083/page2.html");
+
+    // 在 page1 发送数据给 page2
     setTimeout(()=>{
-      popup.postMessage("The user is 'bob' and the password is 'secret'", "*");
+      popup.postMessage("The user is 'bob' and the password is 'secret'", "http://127.0.0.1:8083");
     }, 2000)
+
+    // page1 新增监听事件
     window.addEventListener("message", (event) => {
       if (event.origin !== "http://127.0.0.1:8083") return;
-      console.log(event);
+      console.log("page1 得到 page2 传递的数据", event);
     }, false);
   })
 </script>

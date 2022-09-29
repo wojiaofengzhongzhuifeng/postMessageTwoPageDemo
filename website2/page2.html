@@ -12,11 +12,16 @@ this is page2
 
 <script>
   let test
-  window.addEventListener("message", (event) => {
-    console.log("page2 event", event);
-    if (event.origin !== "http://127.0.0.1:8082") return;
 
+  // page2 新增监听事件
+  window.addEventListener("message", (event) => {
+    if (event.origin !== "http://127.0.0.1:8082") return;
+    console.log("page2 得到 page1 传递的数据", event);
+
+    // 在 page2 发送数据给 page1
     event.source.postMessage("data from page2 addEventListener", "*")
+
+    // 在 page2 得到 page1 的引用
     window.test = event.source
   });
 
@@ -24,6 +29,8 @@ this is page2
 
   setTimeout(()=>{
     console.log(111);
+
+    // 在 page2 发送数据给 page1
     window.test.postMessage("data from page2 addEventListener test", "*")
 
   }, 4000)
