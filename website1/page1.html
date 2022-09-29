@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>page1</title>
+</head>
+<body>
+this is page 1
+<button id="btn">go to page2</button>
+
+<script>
+  btn.addEventListener("click", ()=>{
+    const popup = window.open("http://127.0.0.1:8083/page2.html");
+    setTimeout(()=>{
+      popup.postMessage("The user is 'bob' and the password is 'secret'", "*");
+    }, 2000)
+    window.addEventListener("message", (event) => {
+      if (event.origin !== "http://127.0.0.1:8083") return;
+      console.log(event);
+    }, false);
+  })
+</script>
+</body>
+</html>
